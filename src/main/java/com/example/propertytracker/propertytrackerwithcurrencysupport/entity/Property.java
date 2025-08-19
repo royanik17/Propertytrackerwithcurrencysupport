@@ -21,11 +21,8 @@ public class Property {
     @Field("user_id")
     private String userId;
 
-    @Field("name")
     private String name;
-    @Field("location")
     private String location;
-    @Field("address")
     private String address;
 
     @Field("area_sqft")
@@ -47,4 +44,7 @@ public class Property {
 
     @Field("created_at")
     private LocalDateTime createdAt;
+
+    @Field("updated_at")
+    private LocalDateTime updatedAt;
 }

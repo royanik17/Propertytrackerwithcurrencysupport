@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,5 +30,19 @@ public class UserSearchController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(ApiResponse.error("User not found with email: " + email)));
     }
+
+    @GetMapping("/search/getAll")
+    public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
+
+        List<User> users = userSearchService.findAll();
+
+        if (users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.error("No users found"));
+        }
+
+        return ResponseEntity.ok(ApiResponse.success("Users retrieved successfully", users));
+    }
+
 
 }

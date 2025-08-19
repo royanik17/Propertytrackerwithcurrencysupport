@@ -3,9 +3,10 @@ package com.example.propertytracker.propertytrackerwithcurrencysupport.service;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.entity.Property;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.propertyrepository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class PropertySearchService {
 
     @Autowired
@@ -23,4 +24,6 @@ public class PropertySearchService {
     public void deleteProperty(String id) {
         propertyRepository.deleteById(id);
     }
+
+
 }
