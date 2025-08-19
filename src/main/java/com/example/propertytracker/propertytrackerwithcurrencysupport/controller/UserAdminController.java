@@ -1,9 +1,6 @@
 package com.example.propertytracker.propertytrackerwithcurrencysupport.controller;
 
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.ApiResponse;
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.CreateUserRequest;
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.UpdateUserRequest;
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.UserResponse;
+import com.example.propertytracker.propertytrackerwithcurrencysupport.client.*;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.service.UserAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin(origins = "http://localhost:9002")
 public class UserAdminController {
 
     @Autowired
@@ -32,5 +30,11 @@ public class UserAdminController {
             @Validated @RequestBody UpdateUserRequest request) {
         UserResponse response = userAdminService.updateUser(userId, request);
         return ResponseEntity.ok(ApiResponse.success("User updated successfully", response));
+    }
+
+    @PostMapping("/admin-login")
+    public ResponseEntity<ApiResponse<LoginResponse>> adminLogin(@RequestBody LoginRequest request) {
+        LoginResponse response = userAdminService.login(request);
+        return ResponseEntity.ok(ApiResponse.success("Login successful", response));
     }
 }

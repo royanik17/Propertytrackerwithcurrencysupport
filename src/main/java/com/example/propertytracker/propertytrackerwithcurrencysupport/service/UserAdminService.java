@@ -1,8 +1,6 @@
 package com.example.propertytracker.propertytrackerwithcurrencysupport.service;
 
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.CreateUserRequest;
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.UpdateUserRequest;
-import com.example.propertytracker.propertytrackerwithcurrencysupport.client.UserResponse;
+import com.example.propertytracker.propertytrackerwithcurrencysupport.client.*;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.entity.User;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.exception.UserNotFoundException;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.userrepository.UserRepository;
@@ -78,4 +76,16 @@ public class UserAdminService {
                 .notificationSettings(user.getNotificationSettings())
                 .build();
     }
+
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return new LoginResponse(user.getId(), user.getName(), user.getRole().name());
+    }
+
 }

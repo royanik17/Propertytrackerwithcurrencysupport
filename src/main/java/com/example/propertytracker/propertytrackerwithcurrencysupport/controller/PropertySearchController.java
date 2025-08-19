@@ -4,26 +4,31 @@ package com.example.propertytracker.propertytrackerwithcurrencysupport.controlle
 import com.example.propertytracker.propertytrackerwithcurrencysupport.client.CreatePropertyRequest;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.entity.Property;
 import com.example.propertytracker.propertytrackerwithcurrencysupport.service.PropertyAdminService;
+import com.example.propertytracker.propertytrackerwithcurrencysupport.service.PropertySearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/properties")
+@CrossOrigin(origins = "http://localhost:9002")
 public class PropertySearchController {
 
     @Autowired
-    private  PropertyAdminService propertyAdminService;
+    private PropertySearchService propertySearchService;
 
-    @PostMapping
-    public ResponseEntity<Property> addProperty(@RequestBody CreatePropertyRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(propertyAdminService.addProperty(request));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Property>> getPropertiesByUser(@PathVariable String userId) {
+        List<Property> properties = propertySearchService.getPropertiesByUser(userId);
+        return ResponseEntity.ok(properties);
     }
+
+
+
+
 
 
 

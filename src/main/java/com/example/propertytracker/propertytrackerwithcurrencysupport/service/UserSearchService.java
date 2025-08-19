@@ -20,6 +20,10 @@ public class UserSearchService {
         return userRepository.findByEmail(email);
     }
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
 
 
 }
